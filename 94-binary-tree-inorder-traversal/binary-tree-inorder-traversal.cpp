@@ -12,9 +12,6 @@
 class Solution {
 public:
     vector<int> result;
-    void intr(TreeNode* root){
-        
-    }
     vector<int> inorderTraversal(TreeNode* root) {
         if(root != NULL){
             inorderTraversal(root->left);
