@@ -10,34 +10,52 @@
  */
 class Solution {
 public:
+    // ListNode* reverseList(ListNode* head) {
+    //     stack<ListNode*> s;
+    //     ListNode* curr = head;
+
+    //     ListNode* result =NULL;
+    //     ListNode* resp = NULL;
+    //     while(curr){
+    //         s.push(curr);
+    //         curr = curr->next;
+    //     }
+
+    //     while(!s.empty()){
+    //         ListNode* temp = s.top();
+    //         s.pop();
+    //         if(result ==NULL){
+    //             result = temp;
+    //             resp = result;
+    //         }
+    //         else{
+    //             resp->next = temp;
+    //             resp = resp->next;
+    //         }
+    //     }
+
+    //     if (resp != NULL) // Ensure the last node's next pointer is NULL
+    //         resp->next = NULL;
+
+
+    //     return result;
+    // }
     ListNode* reverseList(ListNode* head) {
-        stack<ListNode*> s;
         ListNode* curr = head;
+        ListNode* nxt = head;
+        ListNode* prv = NULL;
 
-        ListNode* result =NULL;
-        ListNode* resp = NULL;
-        while(curr){
-            s.push(curr);
-            curr = curr->next;
+        if(head == NULL){
+            return NULL;
         }
 
-        while(!s.empty()){
-            ListNode* temp = s.top();
-            s.pop();
-            if(result ==NULL){
-                result = temp;
-                resp = result;
-            }
-            else{
-                resp->next = temp;
-                resp = resp->next;
-            }
+        while(curr != NULL){// this is impo as to ensure that the last node arrow is reversed 
+            nxt = curr-> next;
+            curr->next = prv;
+            prv = curr;
+            curr = nxt;
         }
 
-        if (resp != NULL) // Ensure the last node's next pointer is NULL
-            resp->next = NULL;
-
-
-        return result;
+        return prv;
     }
 };
