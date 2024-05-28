@@ -126,7 +126,7 @@ Node* convert(Node* head, vector<int> & arr){
     return head;
 }
 
-Node *flatten(Node *root)
+Node *flatten2(Node *root)
 {
     vector<int> arr;
     Node* temp = root;
@@ -144,6 +144,52 @@ Node *flatten(Node *root)
     root = convert(root,arr);
     
     return root;
+}
+
+// Recursion Method
+Node* mergeTwoLists(Node* list1, Node* list2) {
+        Node* dummy = new Node(-1);
+        Node* curr = dummy;
+
+        //add all the items till one of them becomes NULL
+        while(list1 != NULL && list2 != NULL){
+            if(list1->data <= list2->data){
+                curr-> bottom = list1;
+                list1 = list1->bottom;
+            }
+            else{
+                curr->bottom = list2;
+                list2 = list2->bottom;
+            }
+            // dont forget to move the curr pointer also 
+            curr = curr-> bottom;
+        }
+        // now it may happen one of them is still has elements 
+        // we just need to append the whole part in one go 
+        if(list1 != NULL){
+            curr->bottom = list1;
+        }
+        else{
+            curr->bottom = list2;
+        }
+
+        if(dummy->bottom != NULL){
+            dummy->bottom->next = NULL;
+        }
+        return dummy->bottom;
+    }
+
+Node *flatten(Node *head)
+{
+    if(head == NULL || head->next == NULL){
+        return head;
+    }
+    
+    //after running this code for a while when the things are returned you will get the merged head here 
+    Node* merged_head = flatten(head->next); //at last it will return you the last line for merge sort 
+    head = mergeTwoLists(head, merged_head);
+    
+    return head;
 }
 
 
