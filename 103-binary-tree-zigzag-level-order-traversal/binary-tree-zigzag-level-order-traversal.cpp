@@ -19,14 +19,22 @@ public:
         // Queue for level order traversal
         queue<TreeNode*> q;
         q.push(root);
-        
+        bool direction = true;
+
         while (!q.empty()) {  // here we cant use !q.empty 
             int count = q.size();
-            vector<int> res;
+            vector<int> res(count);
             for(int i = 0; i < count; i++){
                 root = q.front();
                 q.pop();
-                res.push_back(root->val);
+                if(direction){
+                    res[i] =root->val;
+                }
+                else{
+                    res[count-1-i] =root->val;
+                }
+
+
                 // Push left child in the queue
                 if (root->left)
                     q.push(root->left);
@@ -35,14 +43,15 @@ public:
                     q.push(root->right);
             }
             result.push_back(res);
+            direction = !direction;
         }
-        int i =0;
-        for(auto &it : result){
-            if(i%2 == 1){
-                reverse(it.begin(),it.end());
-            }
-            i++;
-        }
+        // int i =0;
+        // for(auto &it : result){
+        //     if(i%2 == 1){
+        //         reverse(it.begin(),it.end());
+        //     }
+        //     i++;
+        // }
         return result;
     }
 };
