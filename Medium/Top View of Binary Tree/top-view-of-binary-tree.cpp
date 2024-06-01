@@ -103,42 +103,42 @@ class Solution
     //Function to return a list of nodes visible from the top view 
     //from left to right in Binary Tree.
     vector <int> topView(Node *root) {
-        vector<int> result;
-        if( root == NULL){
-            return result;
-        }
-        queue<pair<Node*,int>> q;
-        q.push({root,0});
-        map<int,Node*> mp;
-        while(!q.empty()){
-            int count = q.size();
-            for(int i = 0; i < count; i++){
-                auto top = q.front();
-                root = top.first;
-                int vind = top.second;
-                q.pop();
-                
-                // inert it into the map make sure you update it not insert 
-                if(mp[vind] == NULL){
-                    mp[vind] = root;
+                vector<int> result;
+                if( root == NULL){
+                    return result;
+                }
+                queue<pair<Node*,int>> q;
+                q.push({root,0});
+                map<int,Node*> mp;
+                while(!q.empty()){
+                    int count = q.size();
+                    for(int i = 0; i < count; i++){
+                        auto top = q.front();
+                        root = top.first;
+                        int vind = top.second;
+                        q.pop();
+                        
+                        // inert it into the map make sure you update it not insert 
+                        if(mp[vind] == NULL){
+                            mp[vind] = root;
+                        }
+                        
+                        if(root->left){
+                            q.push({root->left, vind-1});
+                        }
+                        
+                        if(root->right){
+                            q.push({root->right, vind+1});
+                        }
+                        
+                    }
                 }
                 
-                if(root->left){
-                    q.push({root->left, vind-1});
+                for(auto &i : mp){
+                    result.push_back(i.second->data);
                 }
                 
-                if(root->right){
-                    q.push({root->right, vind+1});
-                }
-                
-            }
-        }
-        
-        for(auto &i : mp){
-            result.push_back(i.second->data);
-        }
-        
-        return result;
+                return result;
     }
 
 };
