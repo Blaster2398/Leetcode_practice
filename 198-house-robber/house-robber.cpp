@@ -1,20 +1,22 @@
 class Solution {
 public:
 
-    // tabulation 
+    // tabulation ( to optimize it we have used prev1 and prev2)
     int rob(vector<int>& nums) {
         int n = nums.size();
-        vector<int> dp (n, 0);
-        dp[0] = nums[0];
+        // vector<int> dp (n, 0);
+        int prev = nums[0];
+        int prev2 = 0;
 
         for(int i = 1;i < n;i ++){
-            int take  = nums[i] + ((i>1) ? dp[i-2] : 0);
-            int notTake = 0 + dp[i-1];
+            int take  = nums[i] + ((i>1) ? prev2 : 0);
+            int notTake = 0 + prev;
 
-            dp[i] = max(take,notTake);
+            prev2 = prev;
+            prev = max(take,notTake);
         }
 
-        return dp[n-1];
+        return prev;
     }
 
 
