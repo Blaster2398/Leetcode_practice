@@ -15,14 +15,38 @@ class Solution {
                 }
             }
             
-            // why is that is there is a node that is previously visited then we can say there is a cycle 
-            // unless that node is the parent node of the current node 
+            // check if that if the node is previously visited then it is not the parent of the 
+            // current node ie u
             else if(parent != v){
                 return true;
             }
         }
         return false;
     }
+    
+    bool BFS(vector<int> adj[], vector<bool>& visited, int parent, int u) {
+        visited[u] = true;
+        queue<pair<int, int>> q;
+        q.push({u, parent});
+        while (!q.empty()) {
+            auto ele = q.front();
+            int node = ele.first;
+            int par = ele.second;
+            q.pop();
+    
+            for (int v : adj[node]) {
+                if (!visited[v]) {
+                    visited[v] = true;
+                    q.push({v, node});
+                } else if (par != v) {
+                    // Found a cycle
+                    return true;
+                }
+            }
+        }
+        return false;
+}
+
     // Function to detect cycle in an undirected graph.
     bool isCycle(int V, vector<int> adj[]) {
         // step1 initialize a visited arraya and a parent variable which will sore the parent of the 
@@ -33,7 +57,8 @@ class Solution {
         // step2 do a DFS for disconnected graphs 
         for(int i = 0;i < V; i++){
             if(visited[i] == false){
-                if(DFS(adj,visited, parent,i) == true){
+                // if(DFS(adj,visited, parent,i) == true){
+                if(BFS(adj,visited,parent,i) == true){
                     return true;
                 }
             }
