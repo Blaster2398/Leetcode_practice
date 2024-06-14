@@ -35,8 +35,8 @@ public:
                 }
                 
                 else{
-                    int up = (i>0) ? dp[i-1][j] :0 ;
-                    int left = (j>0) ? dp[i][j-1] : 0 ;
+                    int up = (i-1>=0) ? dp[i-1][j] :0 ;
+                    int left = (j-1>=0) ? dp[i][j-1] : 0 ;
                     dp[i][j] = up + left;
                 }
             }
