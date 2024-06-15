@@ -1,7 +1,7 @@
 class Solution {
 public:
     void addEdge(vector<vector<int>>& adj, int u, int v){
-        adj[u].push_back(v);
+        adj[v].push_back(u);
     }
 
     bool topo(vector<vector<int>>& adj, int V){
