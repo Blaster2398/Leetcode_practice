@@ -1,5 +1,8 @@
 class Solution {
 private:
+    void DFS(vector<vector<int>>& graph,vector<bool> &visited,int color, int u, bool & flag){
+         
+    }
     void BFS(vector<vector<int>>& graph,vector<bool> &visited,vector<int> &color, int u, bool & flag){
         visited[u] = true;
         color[u] = 0;
@@ -21,12 +24,25 @@ private:
                 else{
                    if(color[v] != !col){
                     flag = false;
+                    break;
                    } 
                 }
             }
         }
     }
 public:
+    // bool isBipartite(vector<vector<int>>& graph) {
+    //     int n = graph.size();
+    //     vector<bool> visited(n , false);
+         
+    //     bool flag = true;
+    //     for( int i = 0; i < n; i++){
+    //         if(visited[i] == false){
+    //             DFS(graph, visited, 0, i, flag);
+    //         }
+    //     }
+    //     return flag;
+    // }
     bool isBipartite(vector<vector<int>>& graph) {
         int n = graph.size();
         vector<bool> visited(n , false);
