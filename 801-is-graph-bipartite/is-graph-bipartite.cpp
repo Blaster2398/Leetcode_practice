@@ -1,7 +1,19 @@
 class Solution {
 private:
-    void DFS(vector<vector<int>>& graph,vector<bool> &visited,int color, int u, bool & flag){
-         
+    void DFS(vector<vector<int>>& graph,vector<bool> &visited,int col, int u, bool & flag, vector<int>& color){
+        visited[u] = true;
+        color[u] = col;
+        for(auto v : graph[u]){
+            if(visited[v] == false){
+                DFS(graph,visited,!col,v, flag, color);
+            }
+            else{
+                if(color[v] != !col){
+                    flag = false;
+                    break;
+                }
+            }
+        }
     }
     void BFS(vector<vector<int>>& graph,vector<bool> &visited,vector<int> &color, int u, bool & flag){
         visited[u] = true;
@@ -31,28 +43,28 @@ private:
         }
     }
 public:
-    // bool isBipartite(vector<vector<int>>& graph) {
-    //     int n = graph.size();
-    //     vector<bool> visited(n , false);
-         
-    //     bool flag = true;
-    //     for( int i = 0; i < n; i++){
-    //         if(visited[i] == false){
-    //             DFS(graph, visited, 0, i, flag);
-    //         }
-    //     }
-    //     return flag;
-    // }
     bool isBipartite(vector<vector<int>>& graph) {
         int n = graph.size();
         vector<bool> visited(n , false);
-        vector<int> color(n, -1);  // there are 2 color 0 or 1 
+        vector<int> color(n, -1);
         bool flag = true;
         for( int i = 0; i < n; i++){
             if(visited[i] == false){
-                BFS(graph, visited, color, i, flag);
+                DFS(graph, visited, 0, i, flag, color);
             }
         }
         return flag;
     }
+    // bool isBipartite(vector<vector<int>>& graph) {
+    //     int n = graph.size();
+    //     vector<bool> visited(n , false);
+    //     vector<int> color(n, -1);  // there are 2 color 0 or 1 
+    //     bool flag = true;
+    //     for( int i = 0; i < n; i++){
+    //         if(visited[i] == false){
+    //             BFS(graph, visited, color, i, flag);
+    //         }
+    //     }
+    //     return flag;
+    // }
 };
