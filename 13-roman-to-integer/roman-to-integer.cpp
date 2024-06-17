@@ -1,7 +1,7 @@
 class Solution {
 public:
     int romanToInt(string s) {
-        map<char,int> mp ={
+        unordered_map<char,int> mp ={
             {'I',1},
             {'V',5},
             {'X',10},
@@ -22,7 +22,6 @@ public:
         }
 
         res+=mp[s[s.length()-1]];
-        
 
         return res;
         
