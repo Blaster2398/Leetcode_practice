@@ -4,7 +4,7 @@ public:
         int n = nums.size();
         sort(nums.begin(),nums.end());
         vector<vector<int>> ans;
-        vector<vector<long long>> lump (100, vector<long long>(1000,200));
+        
         for(int i = 0; i < n;i++){
             if(i > 0 && nums[i] == nums[i-1]) continue;
             for(int j = i+1; j < n; j++){
