@@ -18,11 +18,12 @@ class Solution
         
         while(!pq.empty()){
             int node = pq.top().second;   // shortest disatance node
+            int dis = pq.top().first;
             pq.pop();
             
             for(auto v : adj[node]){
-                if(dist[v[0]] > dist[node] + v[1]){
-                    dist[v[0]] = dist[node] + v[1];
+                if(dist[v[0]] > dis + v[1]){
+                    dist[v[0]] = dis + v[1];
                     pq.push({dist[v[0]], v[0]});
                 }
             }
@@ -31,6 +32,7 @@ class Solution
         return dist;
     }
 };
+
 
 
 //{ Driver Code Starts.
