@@ -38,43 +38,34 @@ class DSU
 class Solution {
 public:
     vector<vector<string>> accountsMerge(vector<vector<string>>& accounts) {
-        //step 1 make a map of email -> parent 
-        map <string, int> help;
-        DSU d(accounts.size());
-        for(int i = 0; i < accounts.size(); i++){
-            int desc = accounts[i].size();
-            for(int j = 1; j < desc; j++){
-                if(help.find(accounts[i][j]) != help.end()){
-                    d.union_rank(help[accounts[i][j]], i);
-                    continue;
+        unordered_map<string, int> emailToAccount;
+        DSU dsu(accounts.size());
+
+        for (int i = 0; i < accounts.size(); i++) {
+            for (int j = 1; j < accounts[i].size(); j++) {
+                const string& email = accounts[i][j];
+                if (emailToAccount.count(email)) {
+                    dsu.union_rank(i, emailToAccount[email]);
+                } else {
+                    emailToAccount[email] = i;
                 }
-                help[accounts[i][j]] = i;
-            }
-
-        }
-        for(auto i : help){
-            cout << i.first << "->" << i.second<<endl;
-        }
-        vector<vector<string>> result(accounts.size());
-        for(int i = 0; i < accounts.size(); i++){
-            if(d.find(i) == i){
-                result[i].push_back(accounts[i][0]);
-            }
-        }
-        
-        for(const auto& pair: help){
-            string id = pair.first;
-            int parent = d.find(pair.second);
-            result[parent].push_back(id);
-        }
-        vector<vector<string>> ans;
-        for(const auto & it : result){
-            if(!it.empty()){
-                ans.push_back(it);
             }
         }
 
+        unordered_map<int, vector<string>> accountToEmails;
+        for (const auto& [email, account] : emailToAccount) {
+            int rootAccount = dsu.find(account);
+            accountToEmails[rootAccount].push_back(email);
+        }
 
-        return ans;
+        vector<vector<string>> mergedAccounts;
+        for (auto& [account, emails] : accountToEmails) {
+            sort(emails.begin(), emails.end());
+            vector<string> accountList = {accounts[account][0]};
+            accountList.insert(accountList.end(), emails.begin(), emails.end());
+            mergedAccounts.push_back(accountList);
+        }
+
+        return mergedAccounts;
     }
 };
