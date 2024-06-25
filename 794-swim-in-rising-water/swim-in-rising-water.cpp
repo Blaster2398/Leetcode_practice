@@ -11,6 +11,7 @@ public:
         priority_queue<pair<int, pair<int, int>>, vector<pair<int, pair<int, int>>>, greater<pair<int, pair<int, int>>>> pq;
 
         vector<vector<int>> time(n, vector<int>(n, 1e9));
+        
         // Initial push of the source node
         pq.push({grid[src.first][src.second], src});
         time[src.first][src.second] = grid[src.first][src.second];
