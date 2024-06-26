@@ -2,7 +2,7 @@ class Solution {
 public:
     int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
         // for faster searching purposes
-        set<string> st;
+        unordered_set<string> st;
         int flag = 0;
         for(string i : wordList){
             if(i == endWord) flag = 1;
