@@ -23,7 +23,18 @@ public:
         }
          
     }
-    TreeNode* searchBST(TreeNode* root, int val) {
+    TreeNode* searchBST_recursive(TreeNode* root, int val) {
         return util(root, val);
+    }
+    TreeNode* searchBST(TreeNode* root, int val) {
+        while(root != NULL && root->val != val){
+            if(val > root->val){
+                root = root->right;
+            }
+            else if(val < root->val){
+                root = root->left;
+            }
+        }
+        return root;
     }
 };
