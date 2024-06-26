@@ -11,23 +11,32 @@
  */
 class Solution {
 public:
-    
-    int kthSmallestd(TreeNode* root, int k) {
-        vector<int> res;
-        INO(root, res);
-
-        return res[k-1];
-    }
-    void INO(TreeNode* root, vector<int>& res){
+    void INO(TreeNode* root,int & counter, int k, TreeNode*& res){
         if(root == NULL) return ;
-        INO(root->left,res);
-        res.push_back(root->val);
-        INO(root->right, res);
+        INO(root->left,counter, k,res);
+        counter++;
+        if(counter == k) res = root; 
+        INO(root->right,counter, k, res);
+        
     }
     int kthSmallest(TreeNode* root, int k) {
-        vector<int> res;
-        INO(root, res);
-
-        return res[k-1];
+        int counter = 0;
+        TreeNode* res = new TreeNode();
+        INO(root, counter, k,res);
+        return res->val;
     }
+
+    // // brute force
+    // void INO(TreeNode* root, vector<int>& res){
+    //     if(root == NULL) return ;
+    //     INO(root->left,res);
+    //     res.push_back(root->val);
+    //     INO(root->right, res);
+    // }
+    // int kthSmallest(TreeNode* root, int k) {
+    //     vector<int> res;
+    //     INO(root, res);
+
+    //     return res[k-1];
+    // }
 };
