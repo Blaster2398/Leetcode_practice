@@ -13,7 +13,7 @@ public:
         // do a BFS
         queue<pair<string,int>> q;
         q.push({beginWord, 1});
-        unordered_set<string> check;
+
         while(!q.empty()){
             string word = q.front().first;
             int lvl = q.front().second;
@@ -26,9 +26,8 @@ public:
                 for(int j = 0; j < 26; j++){
                     word[i] = 'a' + j;
                     if(word == orgword) continue;
-                    if(st.find(word) != st.end() && check.find(word) == check.end()){
-                        cout << word << endl;
-                        check.insert(word);
+                    if(st.find(word) != st.end()){
+                        st.erase(word);
                         q.push({word, lvl+1});
                     }
                 }
