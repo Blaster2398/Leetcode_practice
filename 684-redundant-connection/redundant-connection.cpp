@@ -45,7 +45,7 @@ public:
             int v = it[1];
             n = max(n, max(u,v));
         }
-        vector<vector<int>> res;
+        vector<int> res;
         DSU d(n);
         for(auto it : edges){
             int u = it[0];
@@ -54,9 +54,11 @@ public:
                 d.union_rank(u-1,v-1);
             }
             else{
-                res.push_back({u,v});
+                res.push_back(u);
+                res.push_back(v);
+                break;
             }
         }
-        return res[0];
+        return res;
     }
 };
