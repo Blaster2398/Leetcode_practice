@@ -32,7 +32,7 @@ public:
         return false;
 
     }
-    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+    TreeNode* lowestCommonAncestor1(TreeNode* root, TreeNode* p, TreeNode* q) {
         vector<TreeNode*> path1, path2;
 
         if(!findPath(root, p, path1) || !findPath(root, q, path2)){
@@ -45,5 +45,27 @@ public:
             }
         }
         return path1[i-1];
+    }
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if(root == NULL) return NULL;
+
+        if(root == p || root == q){
+            return root;
+        }
+
+        TreeNode* lca1 = lowestCommonAncestor(root->left, p, q);
+        TreeNode* lca2 = lowestCommonAncestor(root->right, p, q);
+
+        if(lca1 && lca2){
+            return root;
+        }
+        if(lca1){
+            return lca1;
+        }
+        else{
+            return lca2;
+        }
+
+        return NULL;
     }
 };
