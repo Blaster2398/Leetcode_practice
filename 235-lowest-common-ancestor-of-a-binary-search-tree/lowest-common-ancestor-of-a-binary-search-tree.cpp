@@ -17,9 +17,15 @@ public:
 
         if(root == p) return true;
 
-        if((findPath(root->left,p,path) || (findPath(root->right,p,path)))){
-            return true;
+        if(root-> val > p->val){
+            if(findPath(root->left,p,path)) return true ;
         }
+        else{
+            if(findPath(root->right,p,path)) return true;
+        }
+        // if((findPath(root->left,p,path) || (findPath(root->right,p,path)))){
+        //     return true;
+        // }
 
         path.pop_back();
 
