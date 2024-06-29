@@ -29,7 +29,7 @@ public:
 
 
     //space opt
-    int maxProfit(vector<int>& prices, int fee) {
+    int maxProfit_spcOPT(vector<int>& prices, int fee) {
         int n = prices.size();
         vector<int> front1(2,0), curr(2,0);
 
@@ -51,6 +51,27 @@ public:
         }
         return curr[1];
     }
+
+
+ int maxProfit(vector<int>& prices, int fee) {
+    if (prices.empty()) return 0;
+    
+    int maxProfit = 0;
+    int buyPrice = prices[0];
+
+    for (int i = 1; i < prices.size(); i++) {
+        // If selling at the current price is profitable
+        if (prices[i] > buyPrice + fee) {
+            maxProfit += prices[i] - buyPrice - fee;
+            // After selling, we need to set the new buy price
+            buyPrice = prices[i] - fee;  // This handles the case where we continue holding
+        } else if (prices[i] < buyPrice) {
+            // If we find a lower price to buy, update the buy price
+            buyPrice = prices[i];
+        }
+    }
+    return maxProfit;
+}
 
 
 
