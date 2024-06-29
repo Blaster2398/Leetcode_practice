@@ -28,8 +28,37 @@ public:
 
 
 
-    // TAbulatin
+    //space opt
     int maxProfit(vector<int>& prices, int fee) {
+        int n = prices.size();
+        vector<int> front1(2,0), curr(2,0);
+
+        // //base case
+        // front1[0] = front1[1] = 0;
+
+        // as it is top doun go from n-1 to 0
+        for(int ind = n-1; ind >= 0; ind--){
+            for(int buy = 0; buy <=1; buy++){
+                int profit = 0;
+                if(buy){
+                    profit = max(-prices[ind]+ front1[0], 0 + front1[1]);
+                } else {
+                    profit = max(prices[ind] + front1[1] -fee, 0 + front1[0]);
+                }
+                curr[buy] = profit;
+            }
+            front1 = curr;
+        }
+        return curr[1];
+    }
+
+
+
+
+
+
+    // TAbulatin
+    int maxProfit_tab(vector<int>& prices, int fee) {
         int n = prices.size();
         vector<vector<int>> dp(n+1, vector<int>(2,0));
 
