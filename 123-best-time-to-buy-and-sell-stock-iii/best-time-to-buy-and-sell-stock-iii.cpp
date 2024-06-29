@@ -29,8 +29,64 @@ public:
         return util(prices, 0, 1,dp ,2);
     }
 
-    // there is O(n) solution also 
+
+
+
+
+
+
+
     int maxProfit(vector<int>& prices) {
+        int n = prices.size();
+        // vector<vector<int>> dp(prices.size(), vector<int>(2,-1));
+        vector<vector<vector<int>>> dp(n+1, vector<vector<int>>(2, vector<int>(3, 0)));
+        
+
+        //// as it is already 0 no use of wrting these
+        // // when ind == n buy and cap can be any thing
+        // for(int i = 0; i < 2; i++){
+        //     for(int j = 0; j < 3; j++){
+        //         dp[n][i][j] = 0;
+        //     }
+        // }
+        // // when cap == 0 then buy and n can be any thing
+        // for(int i = 0; i < n; i++){
+        //     for(int j = 0; j < 2;j++){
+        //         dp[i][j][0] = 0;
+        //     }
+        // }
+
+        for(int ind = n-1; ind >= 0; ind--){
+            for(int buy = 0; buy <= 1; buy++){
+                for(int maxd = 1; maxd <= 2; maxd++){
+                    int profit = 0;
+                    if(buy){
+                        profit = max(-prices[ind]+ dp[ind+1][0][maxd], 0 + dp[ind+1][1][maxd]);
+                    } else {
+                        profit = max(prices[ind] + dp[ind+1][1][maxd-1], 0 + dp[ind+1][0][maxd]);
+                    }
+
+                    dp[ind][buy][maxd] = profit;
+                }
+            }
+        }
+        return dp[0][1][2];
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // there is O(n) solution also 
+    int maxProfit_opt(vector<int>& prices) {
         int f1 = -prices[0], f2 = 0, f3 = -prices[0], f4 = 0;
         for (int i = 1; i < prices.size(); ++i) {
             f1 = max(f1, -prices[i]);
