@@ -39,6 +39,38 @@ public:
     int maxProfit(vector<int>& prices) {
         int n = prices.size();
         // vector<vector<int>> dp(prices.size(), vector<int>(2,-1));
+        // vector<vector<vector<int>>> dp(n+1, vector<vector<int>>(2, vector<int>(3, 0)));
+        vector<vector<int>> after (2, vector<int>(3, 0));
+        vector<vector<int>> curr (2, vector<int>(3, 0));
+        
+        for(int ind = n-1; ind >= 0; ind--){
+            for(int buy = 0; buy <= 1; buy++){
+                for(int maxd = 1; maxd <= 2; maxd++){
+                    int profit = 0;
+                    if(buy){
+                        profit = max(-prices[ind]+ after[0][maxd], 0 + after[1][maxd]);
+                    } else {
+                        profit = max(prices[ind] + after[1][maxd-1], 0 + after[0][maxd]);
+                    }
+
+                    curr[buy][maxd] = profit;
+                }
+            }
+            after = curr;
+        }
+        return after[1][2];
+    }
+
+
+
+
+
+
+
+
+    int maxProfit_tabulation(vector<int>& prices) {
+        int n = prices.size();
+        // vector<vector<int>> dp(prices.size(), vector<int>(2,-1));
         vector<vector<vector<int>>> dp(n+1, vector<vector<int>>(2, vector<int>(3, 0)));
         
 
@@ -72,8 +104,6 @@ public:
         }
         return dp[0][1][2];
     }
-
-
 
 
 
