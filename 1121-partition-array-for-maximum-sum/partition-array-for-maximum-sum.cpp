@@ -25,24 +25,27 @@ public:
 
 
 
-    int memoization(vector<int>& arr, int k, int i, vector<int>& dp) {
-        if (i >= arr.size()) return 0;
-        if (dp[i] != -1) return dp[i];
+    int f(vector<int>& arr, int k, int i, vector<int> & dp){
+        int n = arr.size();
+        // base case 
+        if(i >= arr.size()) return 0;
 
-        int currMax = 0, best = 0;
-        for (int j = 1; j <= k && i + j <= arr.size(); j++) {
-            currMax = max(currMax, arr[i + j - 1]);
-            best = max(best, currMax * j + memoization(arr, k, i + j, dp));
+        if(dp[i] != -1 ) return dp[i];
+        // do some stuff
+        int maxi = 0;
+        int len = 0;
+        int maxele = arr[i];
+        for(int j = i; j < min(i + k, n); j++){
+            len++;
+            maxele = max(maxele, arr[j]);
+            int sum = (len * maxele) + f(arr, k, j+1, dp);
+            maxi = max(maxi, sum);
         }
-
-        return dp[i] = best;
+        return dp[i] = maxi;
     }
-    
     int maxSumAfterPartitioning(vector<int>& arr, int k) {
-        // Uncomment one of the following approaches:
-        vector<int> dp (arr.size(), -1);
-        return memoization(arr, k, 0, dp);
-        // return tabulation(arr, k);
+        vector<int> dp( arr.size() , -1);
+        return f(arr, k, 0, dp);
     }
 
 
