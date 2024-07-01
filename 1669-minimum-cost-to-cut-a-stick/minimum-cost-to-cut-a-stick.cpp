@@ -18,6 +18,20 @@ public:
 
         return dp[i][j] = miin;
     }
+    int minCost_memo(int n, vector<int>& cuts) {
+        // for the partition subproblem to work sort the array so that lft and right subproblem have the right cuts
+        int c = cuts.size();
+        
+        cuts.push_back(n);
+        cuts.push_back(0);
+
+        vector<vector<int>> dp(c+1, vector<int>(c+1, -1));   // added a dp array
+        sort(cuts.begin(), cuts.end());
+
+        return minCut(1, c, cuts, dp);
+    }
+
+
     int minCost(int n, vector<int>& cuts) {
         // for the partition subproblem to work sort the array so that lft and right subproblem have the right cuts
         int c = cuts.size();
@@ -25,11 +39,20 @@ public:
         cuts.push_back(n);
         cuts.push_back(0);
 
-        vector<vector<int>> dp(c+1, vector<int>(c+1, -1));
+        vector<vector<int>> dp(c+2, vector<int>(c+2, 0));   // added a dp array
         sort(cuts.begin(), cuts.end());
 
-
-        return minCut(1, c, cuts, dp);
+        for(int i = c; i >= 1; i--){
+            for(int j = i; j <=c ;j++){
+                int miin = INT_MAX;
+                for(int ind = i; ind <= j; ind++){
+                    int cost = cuts[j+1] - cuts[i-1] + dp[i][ind-1] + dp[ind+1][j];
+                    miin = min(miin, cost);
+                }
+                dp[i][j] = miin;
+            }
+        }
+        return dp[1][c];
     }
 
 
