@@ -3,7 +3,7 @@ public:
     void f(vector<int>& nums, int t, int ind, set<vector<int>>& st, vector<int> temp, int currSum){
         // base cases 
         if(currSum == t){
-            sort(temp.begin(), temp.end());
+            // sort(temp.begin(), temp.end());
             st.insert(temp);
             return;
         }
