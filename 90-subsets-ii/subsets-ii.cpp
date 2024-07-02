@@ -8,12 +8,10 @@ public:
             return;
         }
         // take - not take 
-
-        f(nums, ind+1, res, temp);
-
         temp.push_back(nums[ind]);
         f(nums, ind+1, res, temp);
         temp.pop_back();
+        f(nums, ind+1, res, temp);
         
     }
     vector<vector<int>> subsetsWithDup(vector<int>& nums) {
