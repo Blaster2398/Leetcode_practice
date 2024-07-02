@@ -1,10 +1,10 @@
 class Solution {
 public:
-    void f(vector<int>& nums, int t, int ind, set<vector<int>>& st, vector<int> temp, int currSum){
+    void f(vector<int>& nums, int t, int ind, vector<vector<int>>& st, vector<int> temp, int currSum){
         // base cases 
         if(currSum == t){
             // sort(temp.begin(), temp.end());
-            st.insert(temp);
+            st.push_back(temp);
             return;
         }
         if(ind == nums.size()){
@@ -21,12 +21,12 @@ public:
         
     }
     vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
-        set<vector<int>> st;
+        vector<vector<int>> st;
 
         f(candidates, target, 0, st, {}, 0);
-        vector<vector<int>> res(st.begin(), st.end());
+        // vector<vector<int>> res(st.begin(), st.end());
 
-        return res;
+        return st;
         
     }
 };
