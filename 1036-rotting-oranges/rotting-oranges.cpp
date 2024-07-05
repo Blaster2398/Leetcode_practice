@@ -27,30 +27,17 @@ public:
                 int i = ele.first;
                 int j = ele.second;
 
-                // cout << " i-> " << i << "j-> " <<j <<endl;
-                //left
-                if(j-1>=0 && grid[i][j-1]==1){
-                    grid[i][j-1] = 2;
-                    q.push({i,j-1});
-                    
-                }
-                //up
-                if(i-1>=0 && grid[i-1][j]==1){
-                    grid[i-1][j] = 2;
-                    q.push({i-1,j});
-                    
-                }
-                //right
-                if(j+1<n && grid[i][j+1]==1){
-                    grid[i][j+1] = 2;
-                    q.push({i,j+1});
-                    
-                }
-                //down
-                if(i+1<m && grid[i+1][j]==1){
-                    grid[i+1][j] = 2;
-                    q.push({i+1,j});
-                    
+                vector<int> di = {0, -1, 0, 1};
+                vector<int> dj = {-1, 0, 1, 0};
+
+                for(int k = 0; k < 4; k++){
+                    int ni = i + di[k];
+                    int nj = j + dj[k];
+
+                    if(ni >= 0 && ni < m && nj >= 0 && nj < n && grid[ni][nj] == 1){
+                        grid[ni][nj] = 2;
+                        q.push({ni,nj});
+                    }
                 }
             }
 
