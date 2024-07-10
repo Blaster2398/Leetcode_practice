@@ -7,6 +7,7 @@ public:
             res.insert(temp);
             return;
         }
+        
         // take - not take 
         f(nums, ind+1, res, temp);
         temp.push_back(nums[ind]);
