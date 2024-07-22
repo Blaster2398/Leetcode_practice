@@ -25,12 +25,36 @@ public:
 
         return dp[i][j] = ways;
     }
-    int numDistinct(string str1, string str2) {
+    int numDistinct1(string str1, string str2) {
         int m = str1.size();
         int n = str2.size();
         vector<vector<int>> dp (m+1, vector<int>(n+1, -1));
         int res = util(str1, str2, m, n, dp);
         return res;    
 
+    }
+
+
+    // tabulation
+    int numDistinct(string s, string t) {
+        int m = s.length(), n = t.length();
+        vector<vector<unsigned long long>> dp(m + 1, vector<unsigned long long>(n + 1, 0));
+        
+        // Base case: empty t string can be formed in one way
+        for (int i = 0; i <= m; i++) {
+            dp[i][0] = 1;
+        }
+        
+        for (int i = 1; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
+                if (s[i-1] == t[j-1]) {
+                    dp[i][j] = dp[i-1][j-1] + dp[i-1][j];
+                } else {
+                    dp[i][j] = dp[i-1][j];
+                }
+            }
+        }
+        
+        return (dp[m][n] > INT_MAX) ? INT_MAX : (int)dp[m][n];
     }
 };
