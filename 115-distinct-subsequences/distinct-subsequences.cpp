@@ -36,7 +36,7 @@ public:
 
 
     // tabulation
-    int numDistinct(string s, string t) {
+    int numDistinct2(string s, string t) {
         int m = s.length(), n = t.length();
         vector<vector<unsigned long long>> dp(m + 1, vector<unsigned long long>(n + 1, 0));
         
@@ -56,5 +56,32 @@ public:
         }
         
         return (dp[m][n] > INT_MAX) ? INT_MAX : (int)dp[m][n];
+    }
+
+
+    //space opt
+    int numDistinct(string s, string t) {
+        int m = s.length(), n = t.length();
+        const unsigned long long MOD = 1e9 + 7;
+        
+        vector<unsigned long long> prev(n+1, 0);
+        vector<unsigned long long> curr(n+1, 0);
+        
+        // Base case: empty t string can be formed in one way
+        prev[0] = curr[0] = 1;
+        
+        for (int i = 1; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
+                if (s[i-1] == t[j-1]) {
+                    curr[j] = (prev[j-1] + prev[j]) % MOD;
+                } else {
+                    curr[j] = prev[j];
+                }
+            }
+            prev = curr;
+        }
+        
+        return prev[n];
+    
     }
 };
