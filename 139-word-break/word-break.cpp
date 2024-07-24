@@ -35,7 +35,7 @@ public:
             for(int i = ind; i < s.size(); i++){
                 if(dict.count(s.substr(ind, i - ind+1 )) && dp[i+1]){
                     dp[ind] = true;
-                    // break;
+                    break;
                 }
             }
         }
