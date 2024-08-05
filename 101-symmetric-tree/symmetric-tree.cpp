@@ -21,7 +21,7 @@ public:
     }
     bool isSymmetric(TreeNode* root) {
         if(root == NULL){
-            return NULL;
+            return true;
         }
 
         return ff(root->left, root->right);
