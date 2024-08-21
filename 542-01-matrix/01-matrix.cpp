@@ -26,7 +26,7 @@ public:
             for(int k = 0; k < 4;k++){
                 int ni = i + di[k];
                 int nj = j + dj[k];
-                if(ni >= 0 && nj >= 0 && ni < m && nj < n && (dist[ni][nj] == -1 || 1 + dis < dist[ni][nj])){
+                if(ni >= 0 && nj >= 0 && ni < m && nj < n && (dist[ni][nj] == -1 )){
                     dist[ni][nj] = 1 + dis;
                     q.push({dist[ni][nj],{ni, nj}});
                 }
