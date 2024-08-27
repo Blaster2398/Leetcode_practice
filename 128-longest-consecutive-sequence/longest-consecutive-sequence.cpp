@@ -12,13 +12,13 @@ public:
         for(int i = 0; i < n; i++){
             if(nums[i] == lastSmaller+1){
                 cnt++;
-                // lastSmaller = nums[i];
+                lastSmaller = nums[i];
                 // cout << nums[i] <<endl;
             }
             else if(nums[i] != lastSmaller){
                 cnt = 1;
+                lastSmaller = nums[i];
             }
-            lastSmaller = nums[i];
             longest = max(longest, cnt);
         }
         return longest;
