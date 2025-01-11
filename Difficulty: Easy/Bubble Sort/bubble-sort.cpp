@@ -11,13 +11,17 @@ class Solution {
   public:
     // Function to sort the array using bubble sort algorithm.
     void bubbleSort(vector<int>& arr) {
-        for(int i = 0; i < arr.size(); i++){
-            int ind = i;
-            for(int j = i + 1; j < arr.size(); j++){
-                if(arr[ind] > arr[j] ){
-                    swap(arr[ind], arr[j]);
-                    j = ind;
+        int n = arr.size();
+        for(int i = 0; i < n; i++){
+            int flag = false;
+            for(int j =  0; j < n-1; j++){
+                if(arr[j] > arr[j+1]){
+                    flag = true;
+                    swap(arr[j], arr[j+1]);
                 }
+            }
+            if(flag == false){
+                break;
             }
         }
     }
@@ -50,6 +54,7 @@ int main() {
             cout << e << " ";
         }
         cout << endl;
+        cout << "~" << endl;
     }
     return 0;
 }
