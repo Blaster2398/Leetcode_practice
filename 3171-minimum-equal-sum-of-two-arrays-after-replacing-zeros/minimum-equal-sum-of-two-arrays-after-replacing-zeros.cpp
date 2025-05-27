@@ -12,6 +12,7 @@ public:
             sum2+= nums2[i];
             count2+= (nums2[i] == 0 ? 1 : 0);
         }
+        
         if(count1 == 0 && sum1 < sum2 + count2){
             return -1;
         }
