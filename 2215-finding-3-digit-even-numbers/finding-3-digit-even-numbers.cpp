@@ -1,26 +1,25 @@
 class Solution {
 public:
     vector<int> findEvenNumbers(vector<int>& digits) {
-        set<int> st;
-        int n = digits.size();
+        vector<int> freq(10,0);
+        for(auto i : digits) freq[i]++;
 
-        // Try all 3-digit permutations
-        for (int i = 0; i < n; ++i) {
-            for (int j = 0; j < n; ++j) {
-                for (int k = 0; k < n; ++k) {
-                    if (i != j && j != k && i != k) {
-                        int a = digits[i], b = digits[j], c = digits[k];
+        vector<int> res;
+        for(int i = 100; i <= 998; i+= 2){
+            vector<int> temp = freq;
+            int a = i / 100;
+            int b = (i / 10) % 10;
+            int c = i % 10;
 
-                        // First digit can't be zero, last digit must be even
-                        if (a != 0 && c % 2 == 0) {
-                            int num = a * 100 + b * 10 + c;
-                            st.insert(num);
-                        }
-                    }
-                }
-            }
+            if(--temp[a] < 0) continue;
+            if(--temp[b] < 0) continue;
+            if(--temp[c] < 0) continue;
+
+            res.push_back(i);
+
         }
 
-        return vector<int>(st.begin(), st.end());
+
+        return res;
     }
 };
