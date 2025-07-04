@@ -25,13 +25,13 @@ private:
             int col = color[ft];
             for(auto v : graph[ft]){
                 if(color[v] == -1){
-                    color[v] = !col;
+                    color[v] = col ^ 1;
                     q.push(v); 
                 }
                 else{
-                   if(color[v] != !col){
+                   if(color[v] == col){
                     flag = false;
-                    break;
+                    return;
                    } 
                 }
             }
@@ -56,6 +56,7 @@ public:
         for( int i = 0; i < n; i++){
             if(color[i] == -1){
                 BFS(graph, color, i, flag);
+                if (!flag) return false;
             }
         }
         return flag;
