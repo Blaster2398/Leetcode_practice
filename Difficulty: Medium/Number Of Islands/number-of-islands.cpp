@@ -1,10 +1,3 @@
-//{ Driver Code Starts
-// Initial Template for C++
-
-#include <bits/stdc++.h>
-using namespace std;
-
-// } Driver Code Ends
 // User function Template for C++
 class DSU
 {
@@ -84,30 +77,3 @@ class Solution {
     }
 };
 
-
-//{ Driver Code Starts.
-int main() {
-    int t;
-    cin >> t;
-    while (t--) {
-        int n,m,k; cin>>n>>m>>k;
-        vector<vector<int>> a;
-        
-        for(int i=0; i<k; i++){
-            vector<int> temp;
-            for(int j=0; j<2; j++){
-                int x; cin>>x;
-                temp.push_back(x);
-            }
-            a.push_back(temp);
-        }
-    
-        Solution obj;
-        vector<int> res = obj.numOfIslands(n,m,a);
-        
-        for(auto x : res)cout<<x<<" ";
-        cout<<"\n";
-    }
-}
-
-// } Driver Code Ends
