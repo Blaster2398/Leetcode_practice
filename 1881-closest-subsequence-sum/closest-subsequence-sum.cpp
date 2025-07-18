@@ -15,6 +15,9 @@ public:
         return res;     
     }
     int minAbsDifference(vector<int>& nums, int goal) {
+        ios::sync_with_stdio(0);
+        cin.tie(0);
+        cout.tie(0);
         // for this question the steps are a bit tricky
         // 1) we have to divide the arr into 2 parts 
         // 2) then find all subsetsum for them separately and store in a vector
