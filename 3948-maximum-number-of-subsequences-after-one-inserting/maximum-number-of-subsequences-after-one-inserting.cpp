@@ -22,8 +22,8 @@ public:
         // wehere prel[i]*suft[i] is max
         ll ans = 0, best = 0, ansl = 0, anst = 0;
         for(int i = 0; i < n; i++){
-            ll pre = (i-1 >= 0) ? prel[i] : 0;
-            ll suf = (i+1 < n) ? suft[i] : 0;
+            ll pre = (i-1 >= 0) ? prel[i-1] : 0;
+            ll suf = (i+1 < n) ? suft[i+1] : 0;
 
             // noraml
             if(s[i] == 'C') ans += pre*suf;
