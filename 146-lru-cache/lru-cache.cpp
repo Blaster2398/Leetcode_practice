@@ -1,143 +1,97 @@
-
 class LRUCache {
-public:
-//     class Node{
-//     public:
-//         int key;
-//         int val;
-//         Node* next;
-//         Node* prev;
-//         Node(int k, int v){
-//             key = k;
-//             val = v;
-//             next = NULL;
-//             prev = NULL;
-//         }
-//     };
+    class Node{
+    public:
+        int key;
+        int val;
+        Node* nxt;
+        Node* pre;
+        Node(int key, int val){
+            this->key = key;
+            this->val = val;
+            nxt = NULL;
+            pre = NULL;
+        }
+    };
 
-//     Node* head = new Node(-1,-1);
-//     Node* tail = new Node(-1,-1);
-
-//     unordered_map <int, Node*> mp;
-//     int cap = 0;
-// public:
-//     LRUCache(int capacity) {
-//         this->cap = capacity;
-//         cout << "capaciity set to " << cap << endl;
-//         head->next = tail;
-//         tail->prev = head;
-//     }
-    
-//     int get(int key) {
-//         if(mp.find(key) == mp.end()){
-//             return -1;
-//         }
-//         else{
-//             Node* pos = mp[key];
-//             // remove it from where it is 
-//             pos->prev->next = pos->next;
-//             pos->next->prev = pos->prev;
-
-//             // now add it in front of head
-//             pos->prev = head;
-//             pos->next = head->next;
-
-//             pos->prev->next = pos;
-//             pos->next->prev = pos;
-
-//             mp[key] = pos;
-//             return pos->val;
-//         }
-//     }
-    
-//     void put(int key, int value) {
-//         // here there can be 2 cases if the element is already present or not
-//         // if already present no matter the capacity we will update and take it to front 
-//         // else check cap if overflows then remove the elemnt just before tail and add the new at the begining
-//         // or if doesnot over flows then just add at start 
-//         if(mp.find(key) != mp.end()){
-//             Node* pos = mp[key];
-//             // remove it from where it is 
-//             pos->prev->next = pos->next;
-//             pos->next->prev = pos->prev;
-
-//             pos->val = value;
-
-//             // now add it in front of head
-//             pos->prev = head;
-//             pos->next = head->next;
-
-//             pos->prev->next = pos;
-//             pos->next->prev = pos;
-
-//             mp[key] = pos;
-//         }
-//         else{
-//             // if capacity = 0 then we have to first remove the last guy
-//             cout << "capacity before adding " << key << " " << value << " is " << cap <<endl;
-//             if(cap <= 0){
-//                 Node* pos = tail->prev;
-//                 pos->prev->next = pos->next;
-//                 pos->next->prev = pos->prev;
-
-//                 pos->next = NULL;
-//                 pos->prev = NULL;
-
-//                 mp.erase(pos->key);
-//                 delete(pos);
-//                 cap++;
-//             }
-//             Node* temp = new Node(key, value);
-//             temp->prev = head;
-//             temp->next = head->next;
-            
-//             head->next->prev = temp;
-//             head->next = temp;
-//             mp[key] = temp;
-//             cap--;
-//         }
-
-//     }
-
-
-
-unordered_map<int,int> keyToValue, keyToFrequency;
-deque<int> sequenceOfKeys;
-int capacity;
+    // we need a doubly linked list and a map<int, Node*>
+    Node* head = new Node(-1, -1);
+    Node* tail = new Node(-1, -1);
+    unordered_map<int, Node*> mp;
+    int cap=0;
 public:
     LRUCache(int capacity) {
-        this->capacity = capacity;
+        this->cap = capacity;
+        head->nxt = tail;
+        tail->pre = head;
     }
     
     int get(int key) {
-        if(!keyToValue.count(key))
+        if(mp.find(key) == mp.end()) {
             return -1;
-        keyToFrequency[key]++;
-        sequenceOfKeys.push_back(key);
-        return keyToValue[key];
+        }
+
+        Node* pos = mp[key];
+
+        // remove it from the pos and then add it the front 
+        pos->pre->nxt = pos->nxt;
+        pos->nxt->pre = pos->pre;
+        head->nxt->pre = pos;
+        pos->nxt = head->nxt;
+
+        head->nxt = pos;
+        pos->pre = head;
+
+        mp[key] = pos;
+        return pos->val;
+
     }
     
-    void put(int key, int value) {
-        sequenceOfKeys.push_back(key);
-        keyToFrequency[key]++;
-        while(keyToFrequency.size()>capacity){
-            int firstInSequence=sequenceOfKeys.front();
-            sequenceOfKeys.pop_front();
-            if(--keyToFrequency[firstInSequence]==0){
-                keyToFrequency.erase(firstInSequence);
-                keyToValue.erase(firstInSequence);
-            }
+    void put(int key, int val) {
+        // there are 2 cases 
+        // we find it ( we have to make it to the front )
+        // we didnt check the capacity ( remove somethig and then add it to the front )
+        if(mp.find(key) != mp.end()){
+            Node* pos = mp[key];
+            pos->val = val;
+            // remove the node from the curr pos 
+            pos->pre->nxt = pos->nxt;
+            pos->nxt->pre = pos->pre;
+
+            // add it to the front
+            head->nxt->pre = pos;
+            pos->nxt = head->nxt;
+
+            head->nxt = pos;
+            pos->pre = head;
+
+            mp[key] = pos;
         }
-        keyToValue[key]=value;
+        // if cap <= 0 then remove the last till it is > 0
+        else{
+            if(cap <= 0){
+                Node* pos = tail->pre;
+                int key2 = pos->key;
+                pos->pre->nxt = pos->nxt;
+                pos->nxt->pre = pos->pre;
+
+                pos->nxt = NULL;
+                pos->pre = NULL;
+
+                mp.erase(key2);
+                delete(pos);
+                cap++;
+            }
+            Node* temp = new Node(key, val);
+            head->nxt->pre = temp;
+            temp->nxt = head->nxt;
+
+            head->nxt = temp;
+            temp->pre = head;
+            mp[key] = temp;
+            cap--;
+
+        }
     }
-
-
-/**
- * Your LRUCache object will be instantiated and called as such:
- * LRUCache* obj = new LRUCache(capacity);
- * int param_1 = obj->get(key);
- * obj->put(key,value);
- */
 };
 
 /**
