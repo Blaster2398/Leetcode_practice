@@ -1,42 +1,44 @@
 /**
  * Definition for a binary tree node.
  * struct TreeNode {
- *     long long val;
+ *     int val;
  *     TreeNode *left;
  *     TreeNode *right;
  *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(long long x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(long long x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
 class Solution {
 public:
-    long long widthOfBinaryTree(TreeNode* root) {
-        queue<pair<TreeNode*,long long>> q;
-        q.push({root,0});
-        long long maxWid = 0;
+using ll = long long;
+    int widthOfBinaryTree(TreeNode* root) {
+        // lvl -> -vind1 <-> +vind2
+       
+        queue<pair<TreeNode*, ll>> q;
+        q.push({root, 0ll});
+
+        ll res = 0;
         while(!q.empty()){
-            long long count = q.size();
-            long long lvl_min = q.front().second;
-            long long first,last;
-            for(long long i = 0; i < count; i++){
-                long long curr_id = q.front().second-lvl_min;
-                root = q.front().first;
+            int sz = q.size();
+            ll mun = 0, mux = 0;
+            ll minInd = q.front().second;
+            for(int i = 0; i < sz; i++){
+                auto [node, vind] = q.front();
                 q.pop();
+
+                ll ind = vind - minInd;
+
+                if(i == 0) mun = ind;
+                if(i == sz-1) mux = ind;
                 
-                if(i == 0) first = curr_id;
-                if(i == count-1) last = curr_id;
 
-                if (root->left){
-                    q.push({root->left,2*curr_id+1});
-                }
-                if (root->right){
-                    q.push({root->right,2*curr_id+2});
-                }
+                if(node->left) q.push({node->left, 2*ind});
+                if(node->right) q.push({node->right, 2*ind+1});
+
             }
-            maxWid = max(maxWid , last-first+1);
+            res = max(res, mux - mun + 1);
         }
-        return maxWid;
+        return (int)res;
     }
-
 };
