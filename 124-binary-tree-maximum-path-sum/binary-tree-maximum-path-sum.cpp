@@ -12,29 +12,21 @@
 class Solution {
 public:
 
-    int util(TreeNode* root, int& maxi){
-        if(root == NULL) return 0;
+    int util(TreeNode* root, int& maxi) {
+        if (!root) return 0;
 
-        int lh = util(root->left, maxi);
-        int rh = util(root->right, maxi);
+        int lh = max(0, util(root->left, maxi));
+        int rh = max(0, util(root->right, maxi));
 
+        maxi = max(maxi, root->val + lh + rh);
 
-        if(lh < 0){
-            lh = 0;
-        }
-        if(rh < 0){
-            rh = 0;
-        }
-
-        maxi = max(maxi, root->val+lh+rh);
-
-        //if(max(lh,rh) ==0) return (root->val > 0) ? root->val : 0;
-
-        return root->val + max(lh,rh);
+        return root->val + max(lh, rh);
     }
+
     int maxPathSum(TreeNode* root) {
         int maxi = INT_MIN;
-        int ans = util(root, maxi);
+        util(root, maxi);
         return maxi;
     }
 };
+
