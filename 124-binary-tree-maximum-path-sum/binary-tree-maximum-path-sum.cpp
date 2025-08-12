@@ -28,7 +28,7 @@ public:
 
         maxi = max(maxi, root->val+lh+rh);
 
-        if(max(lh,rh) ==0) return (root->val > 0) ? root->val : 0;
+        //if(max(lh,rh) ==0) return (root->val > 0) ? root->val : 0;
 
         return root->val + max(lh,rh);
     }
