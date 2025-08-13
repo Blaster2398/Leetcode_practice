@@ -11,32 +11,33 @@
  */
 class Solution {
 public:
-    vector<int> result;
     vector<int> preorderTraversal(TreeNode* root) {
-        if(root == NULL){
-            return result;
-        }
-        stack<TreeNode*> st;
-        st.push(root);
-        while(!st.empty()){
-            TreeNode* root = st.top();
-            st.pop();
-            result.push_back(root->val);
-            if(root->right){
-                st.push(root->right);
+        vector<int> preorder ;
+        TreeNode* curr = root;
+        while( curr != NULL ){
+            if( curr -> left == NULL ){
+                preorder.push_back(curr->val);
+                curr = curr -> right;
             }
-            if(root->left){
-                st.push(root->left);
+            else{
+                TreeNode* prev = curr -> left;
+                while( prev->right != NULL && prev -> right != curr ) {
+                    prev = prev -> right;
+                }
+                // the thread is already made so delete it and traverse to the right 
+                if(prev -> right == curr){
+                    prev -> right = NULL;
+                    curr = curr -> right;
+                }
+                // if the thread is not made then just make it 
+                else{
+                    prev -> right = curr;
+                    preorder.push_back(curr->val);
+                    curr = curr -> left;
+                }
             }
         }
-        return result;
-    }        
-    // vector<int> preorderTraversal(TreeNode* root) {
-    //     if(root != NULL){
-    //         result.push_back(root->val);
-    //         preorderTraversal(root->left);
-    //         preorderTraversal(root->right); 
-    //     }
-    //     return result;
-    // }        
+        return preorder;
+    }
 };
+
