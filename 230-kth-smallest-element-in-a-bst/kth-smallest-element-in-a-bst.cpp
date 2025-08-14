@@ -11,32 +11,17 @@
  */
 class Solution {
 public:
-    void INO(TreeNode* root,int & counter, int k, TreeNode*& res){
-        if(root == NULL) return ;
-        INO(root->left,counter, k,res);
-        counter++;
-        if(counter == k) res = root; 
-        INO(root->right,counter, k, res);
-        
+    void pret(TreeNode* root, vector<int> & pre){
+        if(!root) return ;
+
+        pret(root->left, pre);
+        pre.push_back(root->val);
+        pret(root->right, pre);
     }
     int kthSmallest(TreeNode* root, int k) {
-        int counter = 0;
-        TreeNode* res = new TreeNode();
-        INO(root, counter, k,res);
-        return res->val;
+        vector<int> pre;
+        pret(root, pre);
+
+        return pre[k-1];
     }
-
-    // // brute force
-    // void INO(TreeNode* root, vector<int>& res){
-    //     if(root == NULL) return ;
-    //     INO(root->left,res);
-    //     res.push_back(root->val);
-    //     INO(root->right, res);
-    // }
-    // int kthSmallest(TreeNode* root, int k) {
-    //     vector<int> res;
-    //     INO(root, res);
-
-    //     return res[k-1];
-    // }
 };
