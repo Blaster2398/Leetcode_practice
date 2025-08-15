@@ -1,32 +1,26 @@
 class Solution {
 public:
     string reverseWords(string s) {
-        stack<string> st;
-        string temp = "";
-        s+= " ";
+        reverse(s.begin(), s.end());
+        int i = 0, j = 0, n = s.length();
 
-        for(int i =0; i < s.length(); i++){
-            if(s[i] == ' ' ){
-                st.push(temp);
-                temp = "";
+        while (j < n) {
+            while (j < n && s[j] == ' ') j++;
+            if (j >= n) break;
+
+            int start = i;
+            while (j < n && s[j] != ' ') {
+                s[i++] = s[j++];
             }
-            else{
-                temp += s[i];
-            }
+
+            reverse(s.begin() + start, s.begin() + i);
+
+            s[i++] = ' ';
         }
-            
-        string res = "";
-        while(!st.empty()){
-            cout << st.top() << " size " << st.top().length() <<endl;
-            if(st.top().length() != 0){
-                res += st.top()+ " ";
-            }
-            st.pop();
-        }
-        if(res[res.size()-1] == ' '){
-            res = res.substr(0,res.size()-1);
-        }
-        
-        return res;
+
+        // Remove last space
+        if (i > 0 && s[i - 1] == ' ') i--;
+
+        return s.substr(0, i);
     }
 };
