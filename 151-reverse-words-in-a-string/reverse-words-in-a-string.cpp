@@ -23,9 +23,8 @@ public:
             }
             st.pop();
         }
-        if(res[res.size()-1] == ' '){
-            res = res.substr(0,res.size()-1);
-        }
+        
+        res.pop_back();
         
         return res;
     }
