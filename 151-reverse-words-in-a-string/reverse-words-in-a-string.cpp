@@ -24,6 +24,7 @@ public:
             st.pop();
         }
         
+        // this is for the last " " that was added 
         res.pop_back();
         
         return res;
