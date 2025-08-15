@@ -33,8 +33,8 @@ using ll = long long;
                 if(i == sz-1) mux = ind;
                 
 
-                if(node->left) q.push({node->left, 2*ind});
-                if(node->right) q.push({node->right, 2*ind+1});
+                if(node->left) q.push({node->left, 2*ind+1});
+                if(node->right) q.push({node->right, 2*ind+2});
 
             }
             res = max(res, mux - mun + 1);
