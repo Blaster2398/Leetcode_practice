@@ -11,35 +11,17 @@
  */
 class Solution {
 public:
-    bool INO(TreeNode* root, unordered_set<int>& st, int k){
-        bool left = false;
-        bool right = false;
+    bool inorder(TreeNode* root, int k, unordered_set<int>& st){
+        if(!root) return false;
+        if(inorder(root->left, k, st)) return true;
 
-        if(root->left != NULL){
-            left = INO(root->left,st,k);
-        }
-
-        cout << root->val <<endl;
-        if(st.find(k-(root->val)) != st.end()){
-            return true;
-        }
+        if(st.find(k-root->val) != st.end()) return true;
         st.insert(root->val);
 
-        if(root->right!= NULL){
-            right = INO(root->right, st, k);
-        }
-        return left || right;
-
+        return inorder(root->right, k, st);
     }
     bool findTarget(TreeNode* root, int k) {
         unordered_set<int> st;
-        bool res = INO(root, st, k);
-        cout << "printing the set" <<endl;
-        for(int i : st){
-            cout << i << " " ;
-
-        }
-        cout << endl;
-        return res;
+        return inorder(root, k, st);
     }
 };
