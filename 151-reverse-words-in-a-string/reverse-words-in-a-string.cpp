@@ -23,9 +23,9 @@ public:
             }
             st.pop();
         }
-        
-        // this is for the last " " that was added 
-        res.pop_back();
+        if(res[res.size()-1] == ' '){
+            res = res.substr(0,res.size()-1);
+        }
         
         return res;
     }
