@@ -10,20 +10,60 @@
  */
 class Solution {
 public:
+
+    ListNode* merge(ListNode* l1, ListNode* l2){
+        if(!l1) return l2;
+        if(!l2) return l1;
+
+        ListNode* head = NULL;
+        ListNode* tail = NULL;
+
+        if(l1->val < l2->val){
+            head = tail = l1;
+            l1 = l1->next;
+        }
+        else{
+            head = tail = l2;
+            l2 = l2->next;
+        }
+
+        while(l1 && l2){
+            if(l1->val < l2->val){
+                tail->next = l1;
+                l1 = l1->next;
+                tail = tail->next;
+            }
+            else{
+                tail->next = l2;
+                l2 = l2->next;
+                tail = tail->next;
+            }
+        }
+
+        tail->next = (!l1) ? l2 : l1;
+        
+        return head;
+    }
+
     ListNode* sortList(ListNode* head) {
-        if (!head) return nullptr;
-        multimap<int, ListNode*> mp;
-        while (head) {
-            mp.insert({head->val, head});
-            head = head->next;
+        if (!head || !head->next) return head;
+        
+        ListNode* prev = NULL;
+        ListNode* slow = head;
+        ListNode* fast = head;
+
+        while(fast && fast->next){
+            prev = slow;
+            slow = slow ->next;
+            fast = fast->next->next;
         }
-        ListNode* temp = new ListNode(1e7);
-        ListNode* temp2 = temp;
-        for(auto [val, node] : mp){
-            temp2->next = node;
-            temp2 = node;
-        }
-        temp2->next = nullptr;
-        return temp->next;
+
+        prev->next =NULL;
+
+        ListNode* left = sortList(head);
+        ListNode* right = sortList(slow);
+        
+        return merge(left, right);
+
     }
 };
