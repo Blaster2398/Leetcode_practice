@@ -7,8 +7,8 @@ public:
         while(r < s.size()){
             if(st.count(s[r]) == 0){
                 st.insert(s[r]);
+                count = max(count, r-l+1);
                 r++;
-                count = max(count, r-l);
             }
             else{
                 st.erase(s[l]);
