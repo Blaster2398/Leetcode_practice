@@ -2,36 +2,19 @@ class Solution {
 public:
     int numberOfSubstrings(string s) {
         int n = s.size();
-        int st = 0, en = 0;
-        map<char, int> mp;
+        int i = 0, j = 0;
         int count = 0;
+        int freq[3] = {0, 0, 0};
 
-        // Find the first valid window containing all three characters
-        while (en < n) {
-            mp[s[en]]++;
-            if (mp.size() >= 3) {
-                break;
+        while(j < n){
+            freq[s[j]-'a']++;
+            while(freq[0] > 0 && freq[1] > 0 && freq[2] > 0){
+                count += (n - j);
+                freq[s[i] - 'a']--;
+                i++;
             }
-            en++;
+            j++;
         }
-
-        // Expand and contract the window to count valid substrings
-        while (st <= n - 3 && en < n) {
-            if (mp.size() == 3) {
-                count += (n - en);
-                mp[s[st]]--;
-                if (mp[s[st]] == 0) {
-                    mp.erase(s[st]);
-                }
-                st++;
-            } else {
-                en++;
-                if (en < n) {
-                    mp[s[en]]++;
-                }
-            }
-        }
-
         return count;
     }
 };
