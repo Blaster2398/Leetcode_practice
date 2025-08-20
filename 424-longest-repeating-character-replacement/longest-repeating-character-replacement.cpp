@@ -11,7 +11,7 @@ public:
             hash[s[j]-'A']++;
             maxf = max(maxf, hash[s[j]-'A']);
 
-            while(j-i+1 - maxf > k) {
+            if(j-i+1 - maxf > k) {   // changed from while to if to compensate the windoe to be size of maxi;
                 hash[s[i]-'A']--;
                 i++;
                 // for(int l = 0;l < 26; l++) maxf = max(maxf, hash[l]);
