@@ -1,19 +1,23 @@
 class Solution {
 public:
-    int numSubarraysWithSum(vector<int>& nums, int k) {
-        unordered_map<int, int> prefixSum;
-        int sum = 0;
-        int count = 0;
-        prefixSum[0] = 1;  
+    int countAll(vector<int>& nums, int k){
+        int i = 0, j = 0;
+        int count = 0, sum = 0;
 
-        for (int num : nums) {
-            sum += num;
-            if (prefixSum.find(sum - k) != prefixSum.end()) {
-                count += prefixSum[sum - k];
+        if(k < 0) return 0;
+        while(j < nums.size()){
+            sum += nums[j];
+            while(sum > k){
+                sum -= nums[i];
+                i++;
             }
-            prefixSum[sum]++;
+            count += j - i + 1;
+            j++;
         }
-
         return count;
+    }
+    // theory of exclusion 
+    int numSubarraysWithSum(vector<int>& nums, int goal) {
+        return countAll(nums, goal) - countAll(nums, goal-1);
     }
 };
