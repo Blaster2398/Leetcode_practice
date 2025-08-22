@@ -6,13 +6,14 @@ public:
         int ans = INT_MAX;
         while(low <= high){
             int mid = (low + high) / 2;
-
-            if(arr[mid] < ans)  ans = arr[mid];
-            if (arr[low] <= arr[mid]) { // left is sorted 
+            // whichever part is sorted update the min and 
+            // move to the other part 
+            if (arr[low] <= arr[mid]) {
                 ans = min(ans , arr[low]);
                 low = mid + 1;
             }
             else {
+                ans = min(ans, arr[mid]);
                 high = mid - 1;  
             }
         }
