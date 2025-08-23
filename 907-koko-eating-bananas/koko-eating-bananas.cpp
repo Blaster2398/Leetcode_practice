@@ -5,9 +5,9 @@ public:
         ll ans= 0;
         int i = 0;
         while(i < nums.size()){
-            ans += nums[i]/mid;
-            if(nums[i] % mid) ans++;
-            // ans += (nums[i] + mid -1) / mid;
+            // ans += nums[i]/mid;
+            // if(nums[i] % mid) ans++;
+            ans += (nums[i] + mid -1) / mid;
             i++;
         }
         return (ans > h) ? false : true;
