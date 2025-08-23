@@ -9,15 +9,15 @@ public:
 
             if(nums[i] > mid) seq = k;
             else seq--;
-            
+
             if(seq == 0){
-                cout <<" i " << i << endl;
+                
                 ans++;
                 seq = k;
             }
             i++;
         }
-        cout << "for mid " << mid << " ans is " << ans << endl;
+        
         return (ans >= m);
     }
     int minDays(vector<int>& nums, int m, int k) {
