@@ -1,22 +1,32 @@
 class Solution {
 public:
+    pair<int,int> geek(vector<vector<int>>&mat, int mid){
+        int ind = -1;
+        int maxi = 0;
+        for(int i = 0; i < mat.size(); i++){
+            if(mat[i][mid] > maxi){
+                ind = i;
+                maxi = mat[i][mid];
+            }
+        }
+
+        int left = (mid == 0) ? INT_MIN : mat[ind][mid-1];
+        int right = (mid == mat[0].size()-1) ? INT_MIN : mat[ind][mid+1];
+        if(maxi > left && maxi > right) return {0, ind};
+        else if(maxi < left) return {1, 1};
+        else return {-1,-1};
+    }
     vector<int> findPeakGrid(vector<vector<int>>& mat) {
         int n = mat.size();
         int m = mat[0].size();
-        int i = 0, j = 0;
-        while(i >= 0 && j >= 0 && i < n && j < m){
-            int up = (i == 0) ? INT_MIN :  mat[i-1][j];
-            int down = (i == n-1) ? INT_MIN : mat[i+1][j];
-            int left = (j == 0) ? INT_MIN : mat[i][j-1];
-            int right = (j == m-1) ? INT_MIN : mat[i][j+1];
-            int curr = mat[i][j];
-            if(curr > up && curr > down && curr > left && curr > right) return {i , j};
-            else if(curr < up) i--;
-            else if(curr < down) i++;
-            else if(curr < left) j--;
-            else j++;
+        int low = 0, high = m-1;
+        while(low <= high){
+            int mid = (low + high) / 2;
+            auto [check, ind] = geek(mat, mid);
+            if(check == 0) return {ind, mid};
+            else if(check == 1) high = mid - 1;
+            else low = mid + 1;
         }
-
-        return {i, j};
+        return {-1,-1};
     }
 };
