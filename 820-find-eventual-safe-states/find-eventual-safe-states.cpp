@@ -12,12 +12,34 @@ public:
         return true;
     }
 
-    vector<int> eventualSafeNodes(vector<vector<int>>& graph) {
-        int n = graph.size();
-        vector<int> state(n, 0), ans;
-        for (int i = 0; i < n; i++) {
-            if (dfs(i, graph, state)) ans.push_back(i);
+
+
+    vector<int> eventualSafeNodes(vector<vector<int>>& adj) {
+        int n = adj.size();
+        vector<vector<int>> rg(n);
+        vector<int> inD(n , 0);
+        for(int i = 0; i < n; i++){
+            for(auto v : adj[i]){
+                rg[v].push_back(i);
+                inD[i]++;
+            }
         }
+
+        queue<int> q;
+        for(int i = 0; i < n; i++){
+            if(!inD[i]) q.push(i);
+        }
+        vector<int> ans;
+        while(!q.empty()){
+            int top = q.front(); q.pop();
+            ans.push_back(top);
+            for(auto v : rg[top]){
+                inD[v]--;
+                if(!inD[v]) q.push(v);
+            }
+        }
+
+        sort(ans.begin(), ans.end());
         return ans;
     }
 };
