@@ -1,88 +1,44 @@
 class MinStack {
 public:
-    stack<long long> st;
-    long long mini = INT_MAX;
-
+    using ll = long long;
+    stack<ll> st;
+    ll mini;
     MinStack() {
-        while(!st.empty()) st.pop();
+        mini = INT_MAX;
     }
-
-    void push(int value) {
-        long long val = value;
+    
+    void push(int val) {
         if(st.empty()) {
-            mini = val;
             st.push(val);
-        } else {
-            if(val < mini) {
-                st.push(2*val*1LL - mini);
-                mini = val;
-            } else {
-                st.push(val);
-            }
+            mini = val;
+        }
+        else if(val >= mini) {
+            st.push(val);
+        } 
+        else {
+            // Encode value
+            st.push(2LL * val - mini);
+            mini = val;
         }
     }
-
+    
     void pop() {
-        if(st.empty()) return;
-
-        long long t = st.top();
+        if(st.empty()) return ;
+        ll tp = st.top();
         st.pop();
-        if(t < mini) {
-            mini = 2*mini - t;
-        }
+        if(tp < mini) mini = 2LL * mini - tp;
     }
-
+    
     int top() {
         if(st.empty()) return -1;
-        long long t = st.top();
-        if(t < mini) {
-            return mini;
-        } else {
-            return t;
-        }
+        ll tp = st.top();
+        if(tp < mini) return (int)mini;
+        else return (int)tp;
     }
-
+    
     int getMin() {
-        return mini;
+        return (int)mini;
     }
-
-
-
-
-
-//     stack<int> st;
-//     // priority_queue<int, vector<int>, greater<int>> pq;
-//     map<int,int> mp;
-//     MinStack() {
-        
-//     }
-    
-//     void push(int val) {
-//         st.push(val);
-//         // pq.push(val);
-//         mp[val]++;
-//     }
-    
-//     void pop() {
-//         int t = st.top();
-//         st.pop();
-//         if(mp[t] > 0){
-//             mp[t]--;
-//         }
-//         if(mp[t] == 0){
-//             mp.erase(t);
-//         }
-//     }
-    
-//     int top() {
-//         return st.top();
-//     }
-    
-//     int getMin() {
-//         auto it = mp.begin();
-
-//         return it->first;
-//     }
 };
 
 /**
