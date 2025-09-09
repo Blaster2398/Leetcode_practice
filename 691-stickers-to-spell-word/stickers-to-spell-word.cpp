@@ -2,24 +2,26 @@ class Solution {
 public:
     int n;
     unordered_map<string, int> dp;
-    bool hasOverlap(string& s1, string& s2){
-        int m1 = 0, m2 = 0;
-        for(auto c : s1) m1 |= (1 << (c-'a'));
-        for(auto c : s2) m2 |= (1 << (c-'a'));
-        return (m1&m2);
-    }
+    // bool hasOverlap(string& s1, string& s2){
+    //     int m1 = 0, m2 = 0;
+    //     for(auto c : s1) m1 |= (1 << (c-'a'));
+    //     for(auto c : s2) m2 |= (1 << (c-'a'));
+    //     return (m1&m2);
+    // }
 
     int geek(vector<string>& stickers,vector<vector<int>>& dict,  string target){
         if(target.size() == 0) return 0;
         int ans = INT_MAX;
 
         if(dp.count(target)) return dp[target];
-        
+
         vector<int> targ(26, 0);
         for(auto c : target) targ[c-'a']++;
 
         for(int i = 0; i < n; i++){
-            if(!hasOverlap(stickers[i], target)) continue;
+            // check if there is first character obvelap
+            if(dict[i][target[0]-'a'] == 0) continue;
+            // if(!hasOverlap(stickers[i], target)) continue;
             // new target
             string new_target; 
             for(int j = 0; j < 26; j++){
