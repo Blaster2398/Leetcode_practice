@@ -12,7 +12,11 @@ public:
 
 
         vis[i][j] = true;
-        bool found = (geek(i-1, j, ind+1, vis) || geek(i+1, j, ind+1, vis) || geek(i, j+1, ind+1, vis) || geek(i, j-1, ind+1, vis));
+        bool found = (geek(i-1, j, ind+1, vis) || 
+                    geek(i+1, j, ind+1, vis) || 
+                    geek(i, j+1, ind+1, vis) || 
+                    geek(i, j-1, ind+1, vis));
+                    
         vis[i][j] = false;  
         return found;
     }
