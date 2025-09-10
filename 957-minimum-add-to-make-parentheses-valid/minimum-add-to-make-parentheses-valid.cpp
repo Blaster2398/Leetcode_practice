@@ -2,13 +2,13 @@ class Solution {
 public:
     int minAddToMakeValid(string s) {
         int open = 0;
-        int count = 0;
-        for(int i = 0; i< s.size(); i++){
-            if(s[i] == '(') open ++;
+        int counter = 0;
+        for(int i = 0; i < s.size(); i++){
+            if(s[i] == '(') open++;
             else if(s[i] == ')' && open > 0) open--;
-            else count++;
+            else counter++;
         }
 
-        return count + open;
+        return open +counter;
     }
 };
