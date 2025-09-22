@@ -5,6 +5,13 @@ public:
         if(s1 == s2) return true;
         if(s2.size() < 1) return false;
 
+        string t1 = s1;
+        string t2 = s2;
+        
+        sort(t1.begin(),t1.end());
+        sort(t2.begin(),t2.end());
+        if(t1 != t2) return dp[s1+' '+s2] = false;
+
         int n1 = s1.length();
         int n2 = s2.length();
 
