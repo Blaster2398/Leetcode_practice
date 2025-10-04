@@ -3,31 +3,32 @@ public:
     int n;
     vector<int> boxes;
     vector<vector<vector<int>>> dp;
+    int f(int l, int r, int k){
+        // base cases 
+        if(l > r) return 0;
 
-    int solve(int l, int r, int k) {
-        if (l > r) return 0;
-        int &ans = dp[l][r][k];
-        if (ans != -1) return ans;
+        if(dp[l][r][k] != -1) return dp[l][r][k];
 
-        // Case 1: remove boxes[r] with the k extras of same color
-        ans = solve(l, r - 1, 0) + (k + 1) * (k + 1);
+        int ways = INT_MIN;
+        // we can combine with the colors after r 
+        ways = max(ways, f(l, r-1, 0) + (k+1)*(k+1));
 
-        // Case 2: try merging with same color earlier in [l..r-1]
-        for (int i = l; i < r; i++) {
-            if (boxes[i] == boxes[r]) {
-                ans = max(ans,
-                          solve(l, i, k + 1) + solve(i + 1, r - 1, 0));
+        // we can combine the rth color with something that is in bw l and r 
+        for(int i = l; i < r; i++){
+            if(boxes[i] == boxes[r]){
+                ways = max(ways , f(l, i, k+1) + f(i+1, r-1, 0));
             }
         }
-        return ans;
-    }
 
-    int removeBoxes(vector<int>& input) {
-        boxes = input;
+        // return the ans 
+        return dp[l][r][k] = ways;
+    }
+    int removeBoxes(vector<int>& inp) {
+        boxes = inp;
         n = boxes.size();
-        dp.assign(n, vector<vector<int>>(n, vector<int>(n, -1)));
-        return solve(0, n - 1, 0);
+        // there are 3 stater l r k where l and r are the range variable and k is the  number of
+        // boxes that are of same type after the rth block 
+        dp.assign(n, vector<vector<int>> (n, vector<int>(n, -1)));
+        return f(0,n-1,0);
     }
 };
-
-
