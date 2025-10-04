@@ -34,7 +34,7 @@ public:
                     if(!vis[start_x][start_y]){
                         long long height = y[start_y+1] - y[start_y];
                         long long width = x[start_x+1] - x[start_x];
-                        cout << height << " " << width << endl;
+                        
                         ans = (ans + (height*width) % mod) % mod;
                     }
                     vis[start_x][start_y] = true;
