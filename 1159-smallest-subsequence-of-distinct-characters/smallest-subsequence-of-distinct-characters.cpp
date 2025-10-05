@@ -9,12 +9,12 @@ public:
 
         for(int i = 0; i < s.size(); i++){
             char c = s[i];
+            freq[c-'a']--;
+            
             if(vis[c-'a']){
-                freq[c-'a']--;
                 continue;
             }
-            while(!st.empty() && freq[st.top() - 'a'] > 1 && c < st.top()){
-                freq[st.top() -'a']--;
+            while(!st.empty() && freq[st.top() - 'a'] > 0 && c < st.top()){
                 vis[st.top() - 'a'] = 0;
                 st.pop();
             }
