@@ -14,17 +14,8 @@ public:
     }
     vector<vector<int>> findPrimePairs(int n) {
         vector<bool> prime = seive(n);
-        unordered_set<int> st;
-        for(int i = 0; i <= n; i++) if(prime[i]) st.insert(i);
-
-        set<vector<int>> rs;
-        for(auto i : st){ 
-            if(st.find(n - i) != st.end()){
-                if(i < n-i) rs.insert({i, n-i});
-                else rs.insert({n-i, i});
-            }
-        }
-        vector<vector<int>> res(rs.begin(), rs.end());
+        vector<vector<int>> res;
+        for(int i = 2; i <= n/2; i++) if(prime[i] && prime[n - i]) res.push_back({i, n-i});
         return res;
     }
 };
