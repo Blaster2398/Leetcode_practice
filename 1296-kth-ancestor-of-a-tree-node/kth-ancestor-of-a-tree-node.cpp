@@ -20,7 +20,7 @@ private:
     void preCompute(int N){
         dfs(0, -1, 0);
         for(int j = 1; j < LOGN; j++){
-            for(int u = 1; u <= N; u++){
+            for(int u = 0; u < N; u++){
                 if(up[u][j-1] != -1) up[u][j] = up[ up[u][j-1] ][j-1];
                 else up[u][j] = -1;
             }
