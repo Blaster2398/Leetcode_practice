@@ -5,7 +5,7 @@ public:
         // and then take the modulo k so that if the modulo repeats 
         // we can say that the prefix sum / sum bw those 
         // indexes might have been divisible by k
-        map<int,int> mp;
+        unordered_map<int,int> mp;
         mp[0] = 1;
         int sum  =0;
         int ans = 0;
