@@ -26,11 +26,9 @@ class DSU{
 
         if(a == b) return;
         if(maxVal[a] > maxVal[b]){
-            maxVal[b] = maxVal[a];
             parent[b] = a;
         }
         else if(maxVal[b] > maxVal[a]){
-            maxVal[a] = maxVal[b];
             parent[a] = b;
         }
         else{
