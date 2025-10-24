@@ -12,7 +12,7 @@ public:
         // if((open + counter) % 2 == 1) return -1;
 
         cout << open << " " << counter << endl;
-        return ((open+1)/2);
+        return ((counter+1)/2);
     }
 };
 
